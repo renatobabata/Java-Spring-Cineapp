@@ -1,5 +1,7 @@
 package net.itinajero.app.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -7,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import net.itinajero.app.model.Filme;
 
 @Controller
 public class HomeController {
@@ -19,10 +23,13 @@ public class HomeController {
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String mostrarPrincipal(Model model) {
 		
-		List<String> filmes = new LinkedList<>();
+		List<Filme> filmes = getLista();
+			
+		/*
 		filmes.add("Corinthians");
 		filmes.add("Velozes e furiosos");
 		filmes.add("Senhor dos anéis");
+ 		*/
 		model.addAttribute("filmes", filmes);
 		
 		return "home";
@@ -40,4 +47,36 @@ public class HomeController {
 		return "detalhe";
 	}
 	
+	private List<Filme> getLista(){
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		List<Filme> lista = null;
+		try {
+			lista = new LinkedList<>();
+			
+			Filme filme1 = new Filme();
+			filme1.setId(1);
+			filme1.setTitulo("Power Rangers");
+			filme1.setDuracao(120);
+			filme1.setClassificacao("8");
+			filme1.setGenero("Aventura");
+			filme1.setDataLancamento(formatter.parse("02-05-2017"));
+		
+			Filme filme2 = new Filme();
+			filme2.setId(2);
+			filme2.setTitulo("Corinthians");
+			filme2.setDuracao(1910);
+			filme2.setClassificacao("10");
+			filme2.setGenero("Emoção");
+			filme2.setDataLancamento(formatter.parse("19-10-1910"));
+		
+			lista.add(filme1);
+			lista.add(filme2);
+			
+			return lista;
+		} catch(ParseException e){
+			System.out.println("Error: "+ e.getMessage());
+			return null;
+		}
+	}
 }
