@@ -61,7 +61,7 @@ public class HomeController {
 			filme1.setClassificacao("8");
 			filme1.setGenero("Aventura");
 			filme1.setDataLancamento(formatter.parse("02-05-2017"));
-			filme1.setImagem("powerranger.jpg");
+			filme1.setImagem("stars.jpg");
 			filme1.setStatus("ativo");
 		
 			Filme filme2 = new Filme();
