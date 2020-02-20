@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,11 +15,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import net.itinajero.app.model.Filme;
-import util.Util;
+import net.itinajero.app.service.IFilmesService;
+import net.itinajero.app.util.Util;
 
 @Controller
 public class HomeController {
 
+	@Autowired
+	private IFilmesService serviceFilme;
+	
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 	
 	@RequestMapping(value="/home", method=RequestMethod.GET)
@@ -30,7 +35,7 @@ public class HomeController {
 	public String buscar(@RequestParam("dataFilme") String datas, Model model) {
 		System.out.println("Buscando os filmes na data: "+datas);
 		List<String> listaDatas = Util.getNextDays(4);
-		List<Filme> filmes = getLista();
+		List<Filme> filmes = serviceFilme.buscarTodas();
 		
 		model.addAttribute("dataFilme", datas);
 		model.addAttribute("filmes", filmes);
@@ -44,7 +49,7 @@ public class HomeController {
 		
 		List<String> listaDatas = Util.getNextDays(4);
 		//System.out.print(listaDatas);
-		List<Filme> filmes = getLista();
+		List<Filme> filmes = serviceFilme.buscarTodas();
 			
 		/*
 		filmes.add("Corinthians");
@@ -80,40 +85,4 @@ public class HomeController {
 		return "detalhe";
 	}
 	
-	private List<Filme> getLista(){
-		
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-		List<Filme> lista = null;
-		try {
-			lista = new LinkedList<>();
-			
-			Filme filme1 = new Filme();
-			filme1.setId(1);
-			filme1.setTitulo("Power Rangers");
-			filme1.setDuracao(120);
-			filme1.setClassificacao("8");
-			filme1.setGenero("Aventura");
-			filme1.setDataLancamento(formatter.parse("02-05-2017"));
-			filme1.setImagem("stars.jpg");
-			filme1.setStatus("ativo");
-		
-			Filme filme2 = new Filme();
-			filme2.setId(2);
-			filme2.setTitulo("Corinthians");
-			filme2.setDuracao(1910);
-			filme2.setClassificacao("10");
-			filme2.setGenero("Emoção");
-			filme2.setDataLancamento(formatter.parse("19-10-1910"));
-			filme2.setImagem("corinthians.png");
-			filme2.setStatus("inativo");
-			
-			lista.add(filme1);
-			lista.add(filme2);
-			
-			return lista;
-		} catch(ParseException e){
-			System.out.println("Error: "+ e.getMessage());
-			return null;
-		}
-	}
 }
