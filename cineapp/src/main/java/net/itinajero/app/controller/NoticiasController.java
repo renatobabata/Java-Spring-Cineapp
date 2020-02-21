@@ -18,13 +18,7 @@ public class NoticiasController {
 	}
 	
 	@PostMapping(value ="/save")
-	public String guardar(@RequestParam("titulo") String titulo, @RequestParam("status") String status, @RequestParam("detalhe") String detalhe) {
-		
-		Noticia noticia = new Noticia();
-		
-		noticia.setTitulo(titulo);
-		noticia.setStatus(status);
-		noticia.setDetalhe(detalhe);
+	public String guardar(Noticia noticia) {
 		
 		System.out.println(noticia);
 		return "noticias/formNoticias";

@@ -53,4 +53,15 @@ public class FilmesServiceImp implements IFilmesService {
 		return lista;
 	}
 
+	@Override
+	public Filme buscarPorId(int idFilme) {
+		
+		for (Filme f : lista) {
+			if(f.getId() == idFilme) {
+				return f;
+			}
+		}
+		return null;
+	}
+
 }

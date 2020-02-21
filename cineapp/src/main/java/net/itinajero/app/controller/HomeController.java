@@ -70,7 +70,7 @@ public class HomeController {
 		
 		System.out.println("idFilme: "+idFilme);
 		System.out.println("dataFilme: "+dataFilme);
-		
+		model.addAttribute("filme", serviceFilme.buscarPorId(idFilme));
 		// TODO - Buscar os horários no banco de dados   
 		
 		/*

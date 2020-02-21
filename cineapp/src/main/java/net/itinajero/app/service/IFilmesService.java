@@ -6,4 +6,5 @@ import net.itinajero.app.model.Filme;
 
 public interface IFilmesService {
 	List<Filme> buscarTodas();
+	Filme buscarPorId(int idFilme);
 }
