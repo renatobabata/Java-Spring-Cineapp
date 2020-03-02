@@ -1,4 +1,5 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,6 +10,7 @@
     <meta name="author" content="">
     <title>Creacion de Peliculas</title>
 	<spring:url value="/resources" var="urlPublic"/>
+	<spring:url value="/filmes/save" var="urlForm"/>
     <link href="${urlPublic }/bootstrap/css/bootstrap.min.css" rel="stylesheet">   
     <link href="${urlPublic }/bootstrap/css/theme.css" rel="stylesheet">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -44,7 +46,20 @@
 	<h3 class="blog-title"><span class="label label-success">Datos de la Pelicula</span></h3>
       </div>
 
-      <form>
+	<spring:hasBindErrors name="filme">
+		<div class="alert alert-danger" role="alert">
+			Por favor corriga o seguinte erro:
+			<ul>
+				<c:forEach var="error" items="${errors.allErrors }">
+					<li><spring:message message="${error}" /></li>
+				</c:forEach>
+			</ul>
+		
+		</div>
+	
+	</spring:hasBindErrors>
+
+      <form action="${urlForm }" method="post">
         <div class="row">
           <div class="col-sm-3">
             <div class="form-group">
@@ -54,14 +69,14 @@
           </div>
           <div class="col-sm-3">
             <div class="form-group">
-              <label for="duracion">Duracion</label>
-              <input type="text" class="form-control" name="duracion" id="duracion" required="required" />
+              <label for="duracion">Duração</label>
+              <input type="text" class="form-control" name="duracao" id="duracacao" required="required" />
             </div>  
           </div>
           <div class="col-sm-3">
             <div class="form-group">
               <label for="clasificacion" class="control-label">Clasificacion</label>              
-              <select id="clasificacion" name="clasificacion" class="form-control">
+              <select id="clasificacao" name="clasificacao" class="form-control">
                 <option value="A">Clasificacion A</option>
                 <option value="B">Clasificacion B</option>
                 <option value="C">Clasificacion C</option>                  
@@ -90,7 +105,7 @@
           <div class="col-sm-3">
             <div class="form-group">
               <label for="estatus" class="control-label">Estatus</label>              
-              <select id="genero" name="estatus" class="form-control">
+              <select id="status" name="status" class="form-control">
                 <option value="Activa">Activa</option>
                 <option value="Inactiva">Inactiva</option>               
               </select>             
@@ -99,14 +114,14 @@
           <div class="col-sm-3">
             <div class="form-group">
               <label for="fechaEstreno">Fecha Estreno</label>             
-              <input type="text" class="form-control" name="fechaEstreno" id="fechaEstreno" required="required" />
+              <input type="text" class="form-control" name="dataLancamento" id="fechaEstreno" required="required" />
             </div>  
           </div>
 
           <div class="col-sm-3">
             <div class="form-group">
               <label for="imagen">Imagen</label>
-              <input type="file" id="archivoImagen" name="archivoImagen" />
+              <input type="file" id="arquivoImagem" name="arquivoImagem" />
               <p class="help-block">Imagen de la pelicula</p>
             </div> 
           </div>
